@@ -18,7 +18,7 @@ defineProps({
         <p class="comment-card__content text-pale">
             {{ comment.content }}
         </p>
-        <LikesCounter :score="comment.score" />
+        <LikesCounter :score="comment.score" :commentId="comment.id" />
         <ReplyButton />
     </div>
 </template>
