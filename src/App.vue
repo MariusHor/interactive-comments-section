@@ -1,9 +1,7 @@
 <script setup>
-import CommentsList from './components/CommentsList.vue'
+import CommentThreadList from './components/CommentThreadList.vue'
 </script>
 
 <template>
-  <CommentsList />
+  <CommentThreadList />
 </template>
-
-<style scoped></style>

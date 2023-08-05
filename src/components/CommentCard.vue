@@ -3,9 +3,9 @@ import LikesCounter from './LikesCounter.vue'
 import ReplyButton from './ReplyButton.vue'
 
 defineProps({
-    comment: Object
+    comment: Object,
+    parentThreadId: Number
 })
-
 </script>
 
 <template>
@@ -18,7 +18,7 @@ defineProps({
         <p class="comment-card__content text-pale">
             {{ comment.content }}
         </p>
-        <LikesCounter :score="comment.score" :commentId="comment.id" />
+        <LikesCounter :score="comment.score" :commentId="comment.id" :parentThreadId="parentThreadId" />
         <ReplyButton />
     </div>
 </template>

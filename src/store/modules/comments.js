@@ -64,20 +64,44 @@ const state = [
 
 const getters = {}
 
+function findAndUpdateComment(comments, commentId, payload) {
+  for (const comment of comments) {
+    if (comment.id === commentId) {
+      comment.score += payload
+      return true
+    }
+    if (comment.replies && comment.replies.length > 0) {
+      if (findAndUpdateComment(comment.replies, commentId, payload)) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 const mutations = {
   setComments(state, payload) {
-    console.log(state, payload.value)
     state = payload.value
   },
-  incrementLikes(state, commentId) {
-    state = state.map((comment) =>
-      comment.id === commentId ? { ...comment, score: comment.score++ } : comment
-    )
+  incrementLikes(state, payload) {
+    if (payload.parentThreadId) {
+      const parentThread = state.find((comment) => comment.id === payload.parentThreadId)
+      if (parentThread) {
+        findAndUpdateComment(parentThread.replies, payload.commentId, 1)
+      }
+    } else {
+      findAndUpdateComment(state, payload.commentId, 1)
+    }
   },
-  decrementLikes(state, commentId) {
-    state = state.map((comment) =>
-      comment.id === commentId ? { ...comment, score: comment.score-- } : comment
-    )
+  decrementLikes(state, payload) {
+    if (payload.parentThreadId) {
+      const parentThread = state.find((comment) => comment.id === payload.parentThreadId)
+      if (parentThread) {
+        findAndUpdateComment(parentThread.replies, payload.commentId, -1)
+      }
+    } else {
+      findAndUpdateComment(state, payload.commentId, -1)
+    }
   }
 }
 
