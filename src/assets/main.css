@@ -1,1 +1,17 @@
 @import './base.css';
+
+#app {
+  min-height: 100vh;
+  background-color: var(--color-very-light-gray);
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.heading-m {
+  font-size: var(--text-heading-m);
+  font-weight: var(--text-medium);
+}
+
+.text-pale {
+  color: var(--color-grayish-blue);
+}
