@@ -65,6 +65,10 @@ const state = [
 const getters = {}
 
 const mutations = {
+  setComments(state, payload) {
+    console.log(state, payload.value)
+    state = payload.value
+  },
   incrementLikes(state, commentId) {
     state = state.map((comment) =>
       comment.id === commentId ? { ...comment, score: comment.score++ } : comment
