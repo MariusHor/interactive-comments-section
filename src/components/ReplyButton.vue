@@ -3,7 +3,7 @@
 
 <template>
     <button class="reply-btn">
-        <img src="images/icon-reply.svg" alt="">
+        <img src="/images/icon-reply.svg" alt="">
         <span>Reply</span>
     </button>
 </template>
