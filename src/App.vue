@@ -1,8 +1,9 @@
 <script setup>
+import CommentCard from './components/CommentCard.vue'
 </script>
 
 <template>
-  <h1>APP</h1>
+  <CommentCard />
 </template>
 
 <style scoped></style>

@@ -11,6 +11,7 @@
   --color-soft-red: #ed6368;
   --color-pale-red: #ffb8bb;
 
+  --text-body-s: 0.875rem;
   --text-body-m: 1rem;
   --text-heading-m: 1rem;
   --text-heading-lg: 1.5rem;
@@ -18,6 +19,8 @@
   --text-regular: 400;
   --text-medium: 500;
   --text-bold: 700;
+
+  --transition-primary: ease-in-out 200ms;
 }
 
 *,
@@ -30,8 +33,26 @@
 body {
   min-height: 100vh;
   font-family: 'Rubik', sans-serif;
-  font-size: 1rem;
+  font-size: var(--text-body-s);
+  font-weight: var(--text-regular);
+  line-height: 1.5;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+}
+
+@media screen and (min-width: 756px) {
+  body {
+    font-size: var(--text-body-m);
+  }
 }
