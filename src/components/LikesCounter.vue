@@ -7,11 +7,11 @@ defineProps({
 <template>
     <div class="likes-counter">
         <button>
-            <img src="images/icon-plus.svg" alt="">
+            <img src="/images/icon-plus.svg" alt="">
         </button>
         <span>{{ score }}</span>
         <button class="button-minus">
-            <img src="images/icon-minus.svg" alt="">
+            <img src="/images/icon-minus.svg" alt="">
         </button>
     </div>
 </template>
