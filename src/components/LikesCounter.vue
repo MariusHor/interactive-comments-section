@@ -1,16 +1,37 @@
 <script setup>
-defineProps({
-    score: Number
+import { useStore } from 'vuex'
+
+const props = defineProps({
+    score: Number,
+    commentId: Number,
+    parentThreadId: Number
 })
+
+const store = useStore()
+
+function incrementLikes() {
+    store.commit('comments/incrementLikes', {
+        commentId: props.commentId,
+        parentThreadId: props.parentThreadId
+    })
+}
+
+function decrementLikes() {
+    store.commit('comments/decrementLikes', {
+        commentId: props.commentId,
+        parentThreadId: props.parentThreadId
+    })
+}
+
 </script>
 
 <template>
     <div class="likes-counter">
-        <button>
+        <button @click="incrementLikes">
             <img src="/images/icon-plus.svg" alt="">
         </button>
         <span>{{ score }}</span>
-        <button class="button-minus">
+        <button @click="decrementLikes">
             <img src="/images/icon-minus.svg" alt="">
         </button>
     </div>

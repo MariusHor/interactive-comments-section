@@ -28,6 +28,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
 body {
@@ -41,6 +42,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+li {
+  list-style: none;
+}
+
 button {
   cursor: pointer;
   border: none;
@@ -48,7 +53,6 @@ button {
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
-  padding: 0;
 }
 
 @media screen and (min-width: 756px) {
