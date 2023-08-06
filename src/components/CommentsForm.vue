@@ -7,7 +7,7 @@ const store = useStore()
 const props = defineProps({
     isReplying: Boolean,
     mainThreadId: Number,
-    replyingTo: Number
+    replyingToId: Number
 })
 
 const emit = defineEmits(['removeReplyForm'])
@@ -21,7 +21,7 @@ const buttonText = computed(() => props.isReplying ? 'REPLY' : 'SEND')
 function formSubmit() {
     if (props.isReplying) {
         store.commit('comments/addReply', {
-            replyingTo: props.replyingTo,
+            replyingToId: props.replyingToId,
             mainThreadId: props.mainThreadId,
             comment: {
                 content: textareaContent.value,

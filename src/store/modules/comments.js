@@ -110,10 +110,10 @@ const mutations = {
   addReply(state, payload) {
     const mainThread = state.items.find((comment) => comment.id === payload.mainThreadId)
 
-    const directReplyingTo =
-      payload.mainThreadId === payload.replyingTo
+    const mainComment =
+      payload.mainThreadId === payload.replyingToId
         ? mainThread
-        : mainThread.replies.find((reply) => reply.id === payload.replyingTo)
+        : mainThread.replies.find((reply) => reply.id === payload.replyingToId)
 
     mainThread.replies.push({
       ...payload.comment,
@@ -121,9 +121,9 @@ const mutations = {
       createdAt: dayjs().toString(),
       score: 0,
       replyingTo: {
-        id: directReplyingTo.id,
-        username: directReplyingTo.user.username,
-        content: directReplyingTo.content
+        id: mainComment.id,
+        username: mainComment.user.username,
+        content: mainComment.content
       }
     })
 

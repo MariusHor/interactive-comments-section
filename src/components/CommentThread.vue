@@ -7,19 +7,30 @@ const props = defineProps({
     comment: Object
 })
 
+
+const emit = defineEmits(['removeReplyForms'])
+
 const isMainReply = ref(false)
 const isInnerReply = ref(false)
-const replyingTo = ref(null)
+const replyingToId = ref(null)
 
 function handleMainReply() {
+    emit('removeReplyForms')
     isMainReply.value = true
-    replyingTo.value = props.comment.id
+    replyingToId.value = props.comment.id
 }
 
 function handleInnerReply(id) {
+    emit('removeReplyForms')
     isInnerReply.value = true
-    replyingTo.value = id
+    replyingToId.value = id
 }
+
+defineExpose({
+    isMainReply,
+    isInnerReply,
+})
+
 </script>
 
 <template>
@@ -28,11 +39,11 @@ function handleInnerReply(id) {
         <div v-if="comment.replies.length" class="comment-thread__replies">
             <CommentCard v-for="reply in comment.replies" :key="reply.id" :comment="reply" :isReply="true"
                 @handleReply="handleInnerReply" />
-            <CommentsForm v-if="isInnerReply" :isReplying="true" :mainThreadId="comment.id" :replyingTo="replyingTo"
-                @removeReplyForm="isInnerReply = false" />
+            <CommentsForm v-if="isInnerReply" :isReplying="true" :mainThreadId="comment.id" :replyingToId="replyingToId"
+                @removeReplyForm="isInnerReply = false" ref="form" />
         </div>
         <CommentsForm v-if="isMainReply" :isReplying="true" :mainThreadId="comment.id"
-            @removeReplyForm="isMainReply = false" :replyingTo="replyingTo" />
+            @removeReplyForm="isMainReply = false" :replyingToId="replyingToId" />
     </li>
 </template>
 

@@ -1,17 +1,25 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import CommentThread from './CommentThread.vue'
 
 const store = useStore()
 const comments = computed(() => store.state.comments.items)
+const elements = ref([])
 
 
+function removeReplyForms() {
+    elements.value.forEach(element => {
+        element.isMainReply = false
+        element.isInnerReply = false
+    })
+}
 </script>
 
 <template>
     <ul class="comment-threads">
-        <CommentThread v-for="comment in comments" :key="comment.id" :comment="comment" />
+        <CommentThread v-for="(comment, index) in comments" :key="comment.id" :comment="comment"
+            @removeReplyForms="removeReplyForms" :ref="(element) => elements[index] = element" />
     </ul>
 </template>
 

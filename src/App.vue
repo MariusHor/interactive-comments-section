@@ -1,11 +1,11 @@
 <script setup>
-import CommentThreadList from './components/CommentThreadList.vue'
+import CommentsThreadList from './components/CommentsThreadList.vue'
 import CommentsForm from './components/CommentsForm.vue'
 </script>
 
 <template>
   <div class="comments-section">
-    <CommentThreadList />
+    <CommentsThreadList />
     <CommentsForm />
   </div>
 </template>
@@ -17,6 +17,5 @@ import CommentsForm from './components/CommentsForm.vue'
       gap: 1rem
       max-width: 45.625rem
       margin: 0 auto
-      padding-top: 2rem
-      padding-bottom: 2rem
+      padding: 2rem 0
 </style>
