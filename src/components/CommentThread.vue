@@ -1,18 +1,38 @@
 <script setup>
-
+import { ref } from 'vue'
 import CommentCard from './CommentCard.vue'
+import CommentsForm from './CommentsForm.vue'
 
-defineProps({
+const props = defineProps({
     comment: Object
 })
+
+const isMainReply = ref(false)
+const isInnerReply = ref(false)
+const replyingTo = ref(null)
+
+function handleMainReply() {
+    isMainReply.value = true
+    replyingTo.value = props.comment.id
+}
+
+function handleInnerReply(id) {
+    isInnerReply.value = true
+    replyingTo.value = id
+}
 </script>
 
 <template>
     <li class="comment-thread">
-        <CommentCard :comment="comment" />
+        <CommentCard :comment="comment" @handleReply="handleMainReply" />
         <div v-if="comment.replies.length" class="comment-thread__replies">
-            <CommentCard v-for="reply in comment.replies" :key="reply.id" :comment="reply" />
+            <CommentCard v-for="reply in comment.replies" :key="reply.id" :comment="reply" :isReply="true"
+                @handleReply="handleInnerReply" />
+            <CommentsForm v-if="isInnerReply" :isReplying="true" :mainThreadId="comment.id" :replyingTo="replyingTo"
+                @removeReplyForm="isInnerReply = false" />
         </div>
+        <CommentsForm v-if="isMainReply" :isReplying="true" :mainThreadId="comment.id"
+            @removeReplyForm="isMainReply = false" :replyingTo="replyingTo" />
     </li>
 </template>
 

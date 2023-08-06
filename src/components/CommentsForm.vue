@@ -1,28 +1,59 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
+
+const props = defineProps({
+    isReplying: Boolean,
+    mainThreadId: Number,
+    replyingTo: Number
+})
+
+const emit = defineEmits(['removeReplyForm'])
+
+const textarea = ref(null)
 const textareaContent = ref('')
 const textareaIsEmpty = computed(() => textareaContent.value.trim().length === 0)
 const currentUser = computed(() => store.state.currentUser)
+const buttonText = computed(() => props.isReplying ? 'REPLY' : 'SEND')
 
-function addComment() {
-    store.commit('comments/addComment', {
-        content: textareaContent.value,
-        user: currentUser.value,
-    })
+function formSubmit() {
+    if (props.isReplying) {
+        store.commit('comments/addReply', {
+            replyingTo: props.replyingTo,
+            mainThreadId: props.mainThreadId,
+            comment: {
+                content: textareaContent.value,
+                user: currentUser.value,
+            }
+        })
+        emit('removeReplyForm')
+    }
+
+    if (!props.isReplying) {
+        store.commit('comments/addComment', {
+            content: textareaContent.value,
+            user: currentUser.value,
+        })
+    }
 
     textareaContent.value = ''
 }
+
+onMounted(() => props.isReplying && textarea.value.focus())
 </script>
 
 <template>
-    <form class="form" @submit.prevent="addComment">
+    <form class="form" @submit.prevent="formSubmit">
         <textarea v-model="textareaContent" name="textarea-field" id="textarea-field" class="form__textarea"
-            placeholder="Add a comment..."></textarea>
+            placeholder="Add a comment..." ref="textarea"></textarea>
         <img :src="currentUser.image.webp" alt="user avatar" class="form__user-avatar">
-        <button class="form__submit" :disabled="textareaIsEmpty">SEND</button>
+        <div v-if="isReplying">
+            <button class="form__submit" :disabled="textareaIsEmpty">{{ buttonText }}</button>
+            <button class="form__discard" @click="$emit('removeReplyForm')">DISCARD</button>
+        </div>
+        <button v-else class="form__submit" :disabled="textareaIsEmpty">{{ buttonText }}</button>
     </form>
 </template>
 
@@ -48,10 +79,13 @@ function addComment() {
             transition: border var(--transition-primary)
             scrollbar-width: thin
             scrollbar-color: var(--color-light-grayish-blue)
+            
             &:focus-visible
                 border: 1px solid var(--color-moderate-blue) 
+
             @media screen and (min-width: 756px)
                 grid-column: 2 / 3
+
             &::-webkit-scrollbar
                 width: 0.625rem
                 background-color: var(--color-light-gray)
@@ -73,7 +107,7 @@ function addComment() {
                 align-self: flex-start
                 grid-column: 1 / 2
                 grid-row: 1 / 2
-        
+    
         &__submit
             justify-self: end
             max-width: 6.5rem
@@ -90,6 +124,22 @@ function addComment() {
                 cursor: initial
             &:hover:not([disabled]) 
                 opacity: 0.6
+            @media screen and (min-width: 756px)
+                grid-column: 3 / 4
+            
+        &__discard
+            margin-top: 1rem 
+            justify-self: end
+            max-width: 6.5rem
+            max-height: 3rem
+            height: 3rem
+            width: 100%
+            border: solid 1px var(--color-light-grayish-blue)
+            border-radius: 0.5rem
+            transition: var(--transition-primary)
+            &:hover
+                background: var(--color-light-grayish-blue)
+                color: white
             @media screen and (min-width: 756px)
                 grid-column: 3 / 4
 </style>

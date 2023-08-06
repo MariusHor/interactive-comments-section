@@ -6,6 +6,7 @@ import CommentThread from './CommentThread.vue'
 const store = useStore()
 const comments = computed(() => store.state.comments.items)
 
+
 </script>
 
 <template>
