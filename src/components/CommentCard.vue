@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import { getElementById, scrollToElement, highlightElement } from '../helpers'
 import LikesCounter from './LikesCounter.vue'
 import ReplyButton from './ReplyButton.vue'
@@ -8,6 +10,10 @@ const props = defineProps({
     comment: Object,
     isReply: Boolean
 })
+
+const store = useStore()
+
+const isCurrentUserComment = computed(() => store.state.currentUser.username === props.comment.user.username)
 
 function handleGoToComment() {
     const element = getElementById(props.comment.replyingTo.id)
@@ -21,6 +27,9 @@ function handleGoToComment() {
         <div class="comment-card__user">
             <img :src="comment.user.image.webp" alt="user avatar" class="comment-card__user-avatar">
             <h3 class="heading-m">{{ comment.user.username }}</h3>
+            <div v-if="isCurrentUserComment" class="user-badge">
+                <span>you</span>
+            </div>
             <FromNow :date="comment.createdAt" />
         </div>
         <p class="comment-card__content text-pale">
@@ -53,7 +62,7 @@ function handleGoToComment() {
         grid-column: 1 / 3
         display: flex
         align-items: center
-        gap: 1rem
+        gap: 0.875rem
         @media screen and (min-width: 756px)
             grid-column: 2 / 3
     
@@ -66,6 +75,11 @@ function handleGoToComment() {
         @media screen and (min-width: 756px)
             grid-column: 2 / 4
 
+    .user-badge
+        background: var(--color-moderate-blue)
+        color: var(--color-white)
+        border-radius: 2px
+        padding: 0 0.5rem
 .replying-to 
     color: var(--color-moderate-blue)
     font-weight: var(--text-medium)
