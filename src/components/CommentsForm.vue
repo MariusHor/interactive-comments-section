@@ -3,17 +3,26 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
+const textareaContent = ref('')
+const textareaIsEmpty = computed(() => textareaContent.value.trim().length === 0)
 const currentUser = computed(() => store.state.currentUser)
-const textareaValue = ref('')
-const comment = computed(() => textareaValue.value.trim())
+
+function addComment() {
+    store.commit('comments/addComment', {
+        content: textareaContent.value,
+        user: currentUser.value,
+    })
+
+    textareaContent.value = ''
+}
 </script>
 
 <template>
-    <form class="form">
-        <textarea v-model="textareaValue" name="textarea-field" id="textarea-field" class="form__textarea"
+    <form class="form" @submit.prevent="addComment">
+        <textarea v-model="textareaContent" name="textarea-field" id="textarea-field" class="form__textarea"
             placeholder="Add a comment..."></textarea>
         <img :src="currentUser.image.webp" alt="user avatar" class="form__user-avatar">
-        <button class="form__submit" :disabled="!comment.length">SEND</button>
+        <button class="form__submit" :disabled="textareaIsEmpty">SEND</button>
     </form>
 </template>
 

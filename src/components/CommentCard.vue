@@ -1,6 +1,7 @@
 <script setup>
 import LikesCounter from './LikesCounter.vue'
 import ReplyButton from './ReplyButton.vue'
+import FromNow from './FromNow.vue'
 
 defineProps({
     comment: Object
@@ -12,7 +13,7 @@ defineProps({
         <div class="comment-card__user">
             <img :src="comment.user.image.webp" alt="user avatar" class="comment-card__user-avatar">
             <h3 class="heading-m">{{ comment.user.username }}</h3>
-            <span class="text-pale">{{ comment.createdAt }}</span>
+            <FromNow :date="comment.createdAt" />
         </div>
         <p class="comment-card__content text-pale">
             {{ comment.content }}
