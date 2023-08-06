@@ -4,7 +4,7 @@ import { useStore } from 'vuex'
 import CommentThread from './CommentThread.vue'
 
 const store = useStore()
-const comments = computed(() => store.state.comments)
+const comments = computed(() => store.state.comments.items)
 
 </script>
 
@@ -20,8 +20,6 @@ const comments = computed(() => store.state.comments)
     flex-direction: column
     justify-content: center
     align-items: center
-    padding-top: 2rem
-    padding-bottom: 2rem
     gap: 1rem
     width: 100%
     @media screen and (min-width: 756px)

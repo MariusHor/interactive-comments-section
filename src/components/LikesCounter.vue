@@ -33,9 +33,9 @@ function decrementLikes() {
 <style lang="sass">
     .likes-counter
         display: flex
-        gap: 0.325rem
         justify-content: space-between
         align-items: center
+        gap: 0.325rem
         max-width: 6.25rem
         width: 100%
         border-radius: 0.625rem
@@ -59,12 +59,10 @@ function decrementLikes() {
             justify-content: center
             height: 100%
             width: 100%
-            padding-top: 0.875rem
-            padding-bottom: 0.875rem
+            padding: 0.875rem 0
             transition: background var(--transition-primary)
             &:hover
                 background: var(--color-light-gray) 
             @media screen and (min-width: 756px)
-                padding-top: 0.625rem
-                padding-bottom: 0.625rem
+                padding: 0.625rem 0
 </style>

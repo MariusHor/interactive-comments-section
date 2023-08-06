@@ -21,6 +21,7 @@ defineProps({
         display: flex
         flex-direction: column
         gap: 1rem
+        width: 100%
 
         &__replies
             display: flex
