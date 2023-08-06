@@ -4,23 +4,16 @@ import { useStore } from 'vuex'
 const props = defineProps({
     score: Number,
     commentId: Number,
-    parentThreadId: Number
 })
 
 const store = useStore()
 
 function incrementLikes() {
-    store.commit('comments/incrementLikes', {
-        commentId: props.commentId,
-        parentThreadId: props.parentThreadId
-    })
+    store.commit('comments/incrementLikes', props.commentId)
 }
 
 function decrementLikes() {
-    store.commit('comments/decrementLikes', {
-        commentId: props.commentId,
-        parentThreadId: props.parentThreadId
-    })
+    store.commit('comments/decrementLikes', props.commentId)
 }
 
 </script>

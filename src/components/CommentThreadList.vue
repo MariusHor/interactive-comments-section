@@ -21,6 +21,7 @@ const comments = computed(() => store.state.comments)
     justify-content: center
     align-items: center
     padding-top: 2rem
+    padding-bottom: 2rem
     gap: 1rem
     width: 100%
     @media screen and (min-width: 756px)
