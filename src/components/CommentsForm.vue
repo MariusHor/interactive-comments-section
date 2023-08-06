@@ -46,10 +46,24 @@ function addComment() {
             border-radius: 0.5rem
             color: var(--color-grayish-blue)
             transition: border var(--transition-primary)
+            scrollbar-width: thin
+            scrollbar-color: var(--color-light-grayish-blue)
             &:focus-visible
                 border: 1px solid var(--color-moderate-blue) 
             @media screen and (min-width: 756px)
                 grid-column: 2 / 3
+            &::-webkit-scrollbar
+                width: 0.625rem
+                background-color: var(--color-light-gray)
+                -webkit-border-radius: 1rem
+
+            &::-webkit-scrollbar-thumb 
+                background-color: var(--color-light-grayish-blue)
+                -webkit-border-radius: 1rem
+                -moz-border-radius: 1rem
+                -ms-border-radius: 1rem
+                -o-border-radius: 1rem
+
         
         &__user-avatar
             width: 2rem
