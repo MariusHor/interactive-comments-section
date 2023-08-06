@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 const store = useStore()
 const currentUser = computed(() => store.state.currentUser)
 const textareaValue = ref('')
+const comment = computed(() => textareaValue.value.trim())
 </script>
 
 <template>
@@ -12,7 +13,7 @@ const textareaValue = ref('')
         <textarea v-model="textareaValue" name="textarea-field" id="textarea-field" class="form__textarea"
             placeholder="Add a comment..."></textarea>
         <img :src="currentUser.image.webp" alt="user avatar" class="form__user-avatar">
-        <button class="form__submit" :disabled="!textareaValue.length">SEND</button>
+        <button class="form__submit" :disabled="!comment.length">SEND</button>
     </form>
 </template>
 
