@@ -11,7 +11,7 @@ defineProps({
     <li class="comment-thread">
         <CommentCard :comment="comment" />
         <div v-if="comment.replies.length" class="comment-thread__replies">
-            <CommentCard v-for="reply in comment.replies" :key="reply.id" :comment="reply" :parentThreadId="comment.id" />
+            <CommentCard v-for="reply in comment.replies" :key="reply.id" :comment="reply" />
         </div>
     </li>
 </template>

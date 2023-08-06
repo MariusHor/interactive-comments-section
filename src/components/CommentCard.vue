@@ -3,8 +3,7 @@ import LikesCounter from './LikesCounter.vue'
 import ReplyButton from './ReplyButton.vue'
 
 defineProps({
-    comment: Object,
-    parentThreadId: Number
+    comment: Object
 })
 </script>
 
