@@ -15,3 +15,7 @@
 .text-pale {
   color: var(--color-grayish-blue);
 }
+
+.highlight {
+  border: solid 1px var(--color-moderate-blue) !important;
+}

@@ -39,7 +39,13 @@ const state = {
             It's very tempting to jump ahead but lay a solid foundation first.`,
           createdAt: '2023-08-05T12:00:06.339Z',
           score: 4,
-          replyingTo: 'maxblagun',
+          replyingTo: {
+            id: 2,
+            username: 'maxblagun',
+            content: `Woah, your project looks awesome! How long have you been coding for? 
+            I'm still new, but think I want to dive into React as well soon. 
+            Perhaps you can give me an insight on where I can learn React? Thanks!`
+          },
           user: {
             image: {
               png: '/images/avatars/image-ramsesmiron.png',
@@ -54,7 +60,12 @@ const state = {
             But the fundamentals are what stay constant.`,
           createdAt: '2023-08-06T13:00:26.339Z',
           score: 2,
-          replyingTo: 'ramsesmiron',
+          replyingTo: {
+            username: 'ramsesmiron',
+            id: 3,
+            content: `If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React.
+            It's very tempting to jump ahead but lay a solid foundation first.`
+          },
           user: {
             image: {
               png: './images/avatars/image-juliusomo.png',
@@ -68,7 +79,24 @@ const state = {
   ]
 }
 
-const getters = {}
+const getters = {
+  getUserById: (state) => (id) => {
+    return state.items.reduce((final, current) => {
+      if (current.id === id) {
+        final += current.user.username
+        return final
+      }
+      current.replies.forEach((reply) => {
+        if (reply.id === id) {
+          final += reply.user.username
+          return final
+        }
+      })
+
+      return final
+    }, '')
+  }
+}
 
 const mutations = {
   incrementLikes(state, commentId) {
@@ -95,12 +123,36 @@ const mutations = {
       score: 0,
       replies: []
     })
+
+    state.nextCommentId++
+  },
+  addReply(state, payload) {
+    const mainThread = state.items.find((comment) => comment.id === payload.mainThreadId)
+
+    const mainComment =
+      payload.mainThreadId === payload.replyingToId
+        ? mainThread
+        : mainThread.replies.find((reply) => reply.id === payload.replyingToId)
+
+    mainThread.replies.push({
+      ...payload.comment,
+      id: state.nextCommentId,
+      createdAt: dayjs().toString(),
+      score: 0,
+      replyingTo: {
+        id: mainComment.id,
+        username: mainComment.user.username,
+        content: mainComment.content
+      }
+    })
+
+    state.nextCommentId++
   }
 }
 
 export default {
   namespaced: true,
   state,
-  getters,
-  mutations
+  mutations,
+  getters
 }

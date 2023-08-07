@@ -8,5 +8,13 @@ const state = {
 
 export default {
   namespaced: true,
+  getters: {
+    getData(state) {
+      return state
+    },
+    getCurrentUserName(state) {
+      return state.username
+    }
+  },
   state
 }
