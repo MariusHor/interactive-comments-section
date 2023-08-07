@@ -56,8 +56,8 @@ onMounted(() => {
 
 <template>
     <form class="form" @submit.prevent="formSubmit">
-        <textarea v-model="textareaContent" name="textarea-field" id="textarea-field" class="form__textarea"
-            :placeholder="textareaPlaceholder" ref="textarea"></textarea>
+        <textarea :value="textareaContent" @input="e => textareaContent = e.target.value" name="textarea-field"
+            id="textarea-field" class="form__textarea" :placeholder="textareaPlaceholder" ref="textarea"></textarea>
         <img :src="currentUser.image.webp" alt="user avatar" class="form__user-avatar" />
         <div v-if="isReplying" class="form__reply-actions">
             <button class="form__submit" :disabled="textareaIsEmpty">{{ buttonText }}</button>
