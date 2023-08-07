@@ -21,8 +21,12 @@ function handleReply(payload) {
   formKey.value++
 }
 
+function removeReplyForm() {
+  replyType.value = null
+}
+
 defineExpose({
-  replyType
+  removeReplyForm
 })
 </script>
 
@@ -39,20 +43,20 @@ defineExpose({
       />
       <CommentsForm
         v-if="replyType === 'innerReply'"
-        :isReplying="true"
         :mainThreadId="comment.id"
         :replyingToId="replyingToId"
-        @removeReplyForm="replyType = null"
+        :isReplying="true"
         :key="formKey"
+        @removeReplyForm="removeReplyForm"
       />
     </div>
     <CommentsForm
       v-if="replyType === 'mainReply'"
-      :isReplying="true"
       :mainThreadId="comment.id"
-      @removeReplyForm="replyType = null"
       :replyingToId="replyingToId"
+      :isReplying="true"
       :key="formKey"
+      @removeReplyForm="removeReplyForm"
     />
   </li>
 </template>

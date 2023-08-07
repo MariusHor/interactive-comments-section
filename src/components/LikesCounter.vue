@@ -29,7 +29,7 @@ function decrementLikes() {
   </div>
 </template>
 
-<style lang="sass">
+<style scoped lang="sass">
 .likes-counter
     display: flex
     justify-content: space-between

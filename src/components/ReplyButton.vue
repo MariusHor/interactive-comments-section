@@ -7,7 +7,7 @@
   </button>
 </template>
 
-<style lang="sass">
+<style scoped lang="sass">
 .reply-btn
     display: flex
     justify-self: end

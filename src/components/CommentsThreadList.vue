@@ -8,7 +8,7 @@ const comments = computed(() => store.state.comments.items)
 const elements = ref([])
 
 function removeReplyForms() {
-  elements.value.forEach((element) => (element.replyType = null))
+  elements.value.forEach((element) => element.removeReplyForm())
 }
 </script>
 
@@ -32,6 +32,4 @@ function removeReplyForms() {
     align-items: center
     gap: 1rem
     width: 100%
-    @media screen and (min-width: 756px)
-        padding-top: 4rem
 </style>

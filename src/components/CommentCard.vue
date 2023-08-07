@@ -14,7 +14,7 @@ const props = defineProps({
 const store = useStore()
 
 const isCurrentUserComment = computed(
-  () => store.state.currentUser.username === props.comment.user.username
+  () => store.getters['currentUser/getUsername'] === props.comment.user.username
 )
 
 function handleGoToComment() {
@@ -45,7 +45,7 @@ function handleGoToComment() {
   </div>
 </template>
 
-<style lang="sass" scoped>
+<style scoped lang="sass">
 .comment-card
     display: grid
     grid-template-columns: 1fr 1fr

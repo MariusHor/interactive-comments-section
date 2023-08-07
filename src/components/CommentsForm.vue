@@ -6,9 +6,9 @@ import { scrollToElement } from '../helpers'
 const store = useStore()
 
 const props = defineProps({
-    isReplying: Boolean,
-    mainThreadId: Number,
-    replyingToId: Number
+  isReplying: Boolean,
+  mainThreadId: Number,
+  replyingToId: Number
 })
 
 const emit = defineEmits(['removeReplyForm'])
@@ -20,53 +20,60 @@ const buttonText = computed(() => (props.isReplying ? 'REPLY' : 'SEND'))
 const currentUser = computed(() => store.getters['currentUser/getData'])
 const replyingToUsername = computed(() => store.getters['comments/getUserById'](props.replyingToId))
 const textareaPlaceholder = computed(() => {
-    return !props.isReplying ? 'Add a comment...' : `@${replyingToUsername.value}`
+  return !props.isReplying ? 'Add a comment...' : `@${replyingToUsername.value}`
 })
 
 function formSubmit() {
-    if (props.isReplying) {
-        store.commit('comments/addReply', {
-            replyingToId: props.replyingToId,
-            mainThreadId: props.mainThreadId,
-            comment: {
-                content: textareaContent.value,
-                user: currentUser.value
-            }
-        })
-        emit('removeReplyForm')
-    }
+  if (props.isReplying) {
+    store.commit('comments/addReply', {
+      replyingToId: props.replyingToId,
+      mainThreadId: props.mainThreadId,
+      comment: {
+        content: textareaContent.value,
+        user: currentUser.value
+      }
+    })
+    emit('removeReplyForm')
+  }
 
-    if (!props.isReplying) {
-        store.commit('comments/addComment', {
-            content: textareaContent.value,
-            user: currentUser.value
-        })
-    }
+  if (!props.isReplying) {
+    store.commit('comments/addComment', {
+      content: textareaContent.value,
+      user: currentUser.value
+    })
+  }
 
-    textareaContent.value = ''
+  textareaContent.value = ''
 }
 
 onMounted(() => {
-    if (textarea.value && props.isReplying) {
-        scrollToElement(textarea.value)
-        textarea.value.focus({ preventScroll: true })
-    }
+  if (textarea.value && props.isReplying) {
+    scrollToElement(textarea.value)
+    textarea.value.focus({ preventScroll: true })
+  }
 })
 </script>
 
 <template>
-    <form class="form" @submit.prevent="formSubmit">
-        <textarea :value="textareaContent" @input="e => textareaContent = e.target.value" name="textarea-field"
-            id="textarea-field" class="form__textarea" :placeholder="textareaPlaceholder" ref="textarea"></textarea>
-        <img :src="currentUser.image.webp" alt="user avatar" class="form__user-avatar" />
-        <div v-if="isReplying" class="form__reply-actions">
-            <button class="form__submit" :disabled="textareaIsEmpty">{{ buttonText }}</button>
-            <button class="form__discard" type="button" @click="$emit('removeReplyForm')">DISCARD</button>
-        </div>
-        <button v-else class="form__submit" type="submit" :disabled="textareaIsEmpty">
-            {{ buttonText }}
-        </button>
-    </form>
+  <form class="form" @submit.prevent="formSubmit">
+    <textarea
+      :value="textareaContent"
+      :placeholder="textareaPlaceholder"
+      name="textarea-field"
+      id="textarea-field"
+      class="form__textarea"
+      ref="textarea"
+      @input="(e) => (textareaContent = e.target.value)"
+    ></textarea>
+    <img :src="currentUser.image.webp" alt="user avatar" class="form__user-avatar" />
+    <div v-if="isReplying" class="form__reply-actions">
+      <button class="form__submit" :disabled="textareaIsEmpty">{{ buttonText }}</button>
+      <button class="form__discard" type="button" @click="$emit('removeReplyForm')">DISCARD</button>
+    </div>
+    <button v-else class="form__submit" type="submit" :disabled="textareaIsEmpty">
+      {{ buttonText }}
+    </button>
+  </form>
 </template>
 
 <style scoped lang="sass">
@@ -80,7 +87,7 @@ onMounted(() => {
     background-color: var(--color-white)
     @media screen and (min-width: 756px)
         grid-template-columns: 0.5fr 8fr 1.5fr
-    
+
     &__reply-actions
         display: flex
         flex-direction: column
