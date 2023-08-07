@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { getElementById, scrollToElement, highlightElement } from '../helpers'
 import LikesCounter from './LikesCounter.vue'
-import ReplyButton from './ReplyButton.vue'
+import IconButton from './IconButton.vue'
 import FromNow from './FromNow.vue'
 
 const props = defineProps({
@@ -21,6 +21,12 @@ function handleGoToComment() {
   const element = getElementById(props.comment.replyingTo.id)
   scrollToElement(element)
   highlightElement(element)
+}
+
+function handleDelete() {
+  store.commit('comments/deleteComment', {
+    id: props.comment.id
+  })
 }
 </script>
 
@@ -41,7 +47,21 @@ function handleGoToComment() {
       {{ comment.content }}
     </p>
     <LikesCounter :score="comment.score" :commentId="comment.id" />
-    <ReplyButton @click="$emit('handleReply', { id: comment.id, isReply })" />
+    <div class="comment-card__actions">
+      <IconButton
+        v-if="!isCurrentUserComment"
+        @click="$emit('handleReply', { id: comment.id, isReply })"
+        :textContent="'Reply'"
+        :variant="'reply'"
+      >
+        <img src="/images/icon-reply.svg" alt="" />
+      </IconButton>
+      <div v-else class="comment-card__user-actions">
+        <IconButton @click="handleDelete" :textContent="'Delete'" :variant="'delete'">
+          <img src="/images/icon-delete.svg" alt="" />
+        </IconButton>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,11 +97,23 @@ function handleGoToComment() {
         @media screen and (min-width: 756px)
             grid-column: 2 / 4
 
-    .user-badge
+    &__actions
+        justify-self: end
+        @media screen and (min-width: 756px)
+            grid-column: 3 / 4
+            grid-row: 1 / 2
+
+    &__user-actions
+        display: flex
+        gap: 1rem
+
+.user-badge
         background: var(--color-moderate-blue)
         color: var(--color-white)
         border-radius: 2px
         padding: 0 0.5rem
+
+
 .replying-to
     color: var(--color-moderate-blue)
     font-weight: var(--text-medium)
