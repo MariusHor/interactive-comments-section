@@ -79,6 +79,25 @@ const state = {
   ]
 }
 
+const getters = {
+  getUserById: (state) => (id) => {
+    return state.items.reduce((final, current) => {
+      if (current.id === id) {
+        final += current.user.username
+        return final
+      }
+      current.replies.forEach((reply) => {
+        if (reply.id === id) {
+          final += reply.user.username
+          return final
+        }
+      })
+
+      return final
+    }, '')
+  }
+}
+
 const mutations = {
   incrementLikes(state, commentId) {
     state.items.forEach((comment) => {
@@ -134,5 +153,6 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  getters
 }

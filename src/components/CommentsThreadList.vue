@@ -7,24 +7,25 @@ const store = useStore()
 const comments = computed(() => store.state.comments.items)
 const elements = ref([])
 
-
 function removeReplyForms() {
-    elements.value.forEach(element => {
-        element.isMainReply = false
-        element.isInnerReply = false
-    })
+  elements.value.forEach((element) => (element.replyType = null))
 }
 </script>
 
 <template>
-    <ul class="comment-threads">
-        <CommentThread v-for="(comment, index) in comments" :key="comment.id" :comment="comment"
-            @removeReplyForms="removeReplyForms" :ref="(element) => elements[index] = element" />
-    </ul>
+  <ul class="comment-threads">
+    <CommentThread
+      v-for="(comment, index) in comments"
+      :key="comment.id"
+      :comment="comment"
+      @removeReplyForms="removeReplyForms"
+      :ref="(element) => (elements[index] = element)"
+    />
+  </ul>
 </template>
 
 <style scoped lang="sass">
-.comment-threads 
+.comment-threads
     display: flex
     flex-direction: column
     justify-content: center
@@ -33,5 +34,4 @@ function removeReplyForms() {
     width: 100%
     @media screen and (min-width: 756px)
         padding-top: 4rem
-
 </style>

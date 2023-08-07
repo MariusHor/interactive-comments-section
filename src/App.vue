@@ -11,11 +11,11 @@ import CommentsForm from './components/CommentsForm.vue'
 </template>
 
 <style scoped lang="sass">
-    .comments-section
-      display: flex
-      flex-direction: column
-      gap: 1rem
-      max-width: 45.625rem
-      margin: 0 auto
-      padding: 2rem 0
+.comments-section
+  display: flex
+  flex-direction: column
+  gap: 1rem
+  max-width: 45.625rem
+  margin: 0 auto
+  padding: 2rem 0
 </style>
