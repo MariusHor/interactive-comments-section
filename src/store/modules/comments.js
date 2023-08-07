@@ -80,7 +80,7 @@ const state = {
 }
 
 const getters = {
-  getUserById: (state) => (id) => {
+  getUsernameByCommentId: (state) => (id) => {
     return state.items.reduce((final, current) => {
       if (current.id === id) {
         final += current.user.username
@@ -101,17 +101,23 @@ const getters = {
 const mutations = {
   incrementLikes(state, commentId) {
     state.items.forEach((comment) => {
-      if (comment.id === commentId) return { ...comment, score: comment.score++ }
+      if (comment.id === commentId) {
+        comment = { ...comment, score: comment.score++ }
+        return
+      }
       comment.replies.forEach((reply) => {
-        if (reply.id === commentId) return { ...reply, score: reply.score++ }
+        if (reply.id === commentId) comment = { ...reply, score: reply.score++ }
       })
     })
   },
   decrementLikes(state, commentId) {
     state.items.forEach((comment) => {
-      if (comment.id === commentId) return { ...comment, score: comment.score-- }
+      if (comment.id === commentId) {
+        comment = { ...comment, score: comment.score-- }
+        return
+      }
       comment.replies.forEach((reply) => {
-        if (reply.id === commentId) return { ...reply, score: reply.score-- }
+        if (reply.id === commentId) comment = { ...reply, score: reply.score-- }
       })
     })
   },
@@ -125,6 +131,19 @@ const mutations = {
     })
 
     state.nextCommentId++
+  },
+  deleteComment(state, payload) {
+    state.items.forEach((comment, commentIndex) => {
+      if (comment.id === payload.id) {
+        state.items.splice(commentIndex, 1)
+        return
+      }
+      comment.replies.forEach((reply, replyIndex) => {
+        if (reply.id === payload.id) {
+          comment.replies.splice(replyIndex, 1)
+        }
+      })
+    })
   },
   addReply(state, payload) {
     const mainThread = state.items.find((comment) => comment.id === payload.mainThreadId)

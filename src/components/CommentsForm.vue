@@ -18,7 +18,9 @@ const textareaContent = ref('')
 const textareaIsEmpty = computed(() => textareaContent.value.trim() === '')
 const buttonText = computed(() => (props.isReplying ? 'REPLY' : 'SEND'))
 const currentUser = computed(() => store.getters['currentUser/getData'])
-const replyingToUsername = computed(() => store.getters['comments/getUserById'](props.replyingToId))
+const replyingToUsername = computed(() =>
+  store.getters['comments/getUsernameByCommentId'](props.replyingToId)
+)
 const textareaPlaceholder = computed(() => {
   return !props.isReplying ? 'Add a comment...' : `@${replyingToUsername.value}`
 })

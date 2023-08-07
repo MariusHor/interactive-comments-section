@@ -8,7 +8,10 @@ const comments = computed(() => store.state.comments.items)
 const elements = ref([])
 
 function removeReplyForms() {
-  elements.value.forEach((element) => element.removeReplyForm())
+  elements.value = elements.value.filter((element) => element)
+  elements.value.forEach((element) => {
+    element.removeReplyForm()
+  })
 }
 </script>
 
