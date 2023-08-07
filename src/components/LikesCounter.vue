@@ -35,8 +35,8 @@ function decrementLikes() {
     justify-content: space-between
     align-items: center
     gap: 0.325rem
-    max-width: 6.25rem
-    width: 100%
+    width: 6.25rem
+    height: 2.5rem
     border-radius: 0.625rem
     background-color: var(--color-very-light-gray)
     color: var(--color-moderate-blue)
@@ -48,9 +48,8 @@ function decrementLikes() {
         flex-direction: column
         align-self: center
         justify-self: center
-        max-width: 2.5rem
-        max-height: 6.25rem
-        height: 100%
+        width: 2.5rem
+        height: 6.25rem
 
     button
         display: flex
