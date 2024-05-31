@@ -1,6 +1,8 @@
 <script setup>
 import CommentsThreadList from './components/CommentsThreadList.vue'
 import CommentsForm from './components/CommentsForm.vue'
+
+console.log('This is a main commit change')
 </script>
 
 <template>
